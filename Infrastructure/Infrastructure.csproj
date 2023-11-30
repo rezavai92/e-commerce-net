@@ -10,7 +10,6 @@
     <Folder Include="BackgroundJobs\" />
     <Folder Include="Logging\" />
     <Folder Include="Mailing\" />
-    <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
