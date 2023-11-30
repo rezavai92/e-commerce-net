@@ -9,6 +9,12 @@
   <ItemGroup>
     <Folder Include="shared\Interfaces\" />
     <Folder Include="shared\" />
+    <Folder Include="UAM\Commands\" />
+    <Folder Include="UAM\Handlers\CommandHandlers\" />
+    <Folder Include="UAM\Handlers\QueryHandlers\" />
+    <Folder Include="UAM\Mappers\" />
+    <Folder Include="UAM\Validators\" />
+    <Folder Include="UAM\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

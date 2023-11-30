@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class EntityBase : IRowLevelSecurity
+    public class EntityBase : IRowLevelSecurity
     {
         public string ItemId { get; set; }
         public DateTime CreatedOn { get; set; }

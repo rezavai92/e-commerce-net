@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class ShippingInfo : EntityBase
+    public class ShippingInfo : EntityBase
     {
     }
 }

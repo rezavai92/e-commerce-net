@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Order : EntityBase
+    public class Order : EntityBase
     {
     }
 }

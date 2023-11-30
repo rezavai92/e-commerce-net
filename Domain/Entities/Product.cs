@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Product : EntityBase
+    public class Product : EntityBase
     {
     }
 }

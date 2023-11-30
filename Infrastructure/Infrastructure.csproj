@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DbContext\" />
     <Folder Include="BackgroundJobs\" />
     <Folder Include="Logging\" />
     <Folder Include="Mailing\" />
