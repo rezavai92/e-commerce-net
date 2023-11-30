@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.shared.Models;
+using Application.UAM.Commands;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +11,7 @@ namespace WebService.Controllers
     [ApiController]
     public class UserManagementController : ControllerBase
     {
+        ISender _sender;
         // GET: api/<UserManagement>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,8 +28,10 @@ namespace WebService.Controllers
 
         // POST api/<UserManagement>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] CreateUserCommand command)
         {
+            var result = await _sender.Send(command);
+            return Ok(result);
         }
 
         // PUT api/<UserManagement>/5

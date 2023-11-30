@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UAM\Commands\" />
-    <Folder Include="UAM\Handlers\CommandHandlers\" />
     <Folder Include="UAM\Handlers\QueryHandlers\" />
     <Folder Include="UAM\Mappers\" />
     <Folder Include="UAM\Validators\" />
@@ -19,6 +17,10 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.8.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>
