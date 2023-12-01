@@ -18,11 +18,12 @@ builder.Services
 builder.Services.AddDbContext<ShophubContext>((opt) =>
 {
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  
 });
 
 
 
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

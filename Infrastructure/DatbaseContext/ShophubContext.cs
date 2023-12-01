@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Domain;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.DatabaseContext
 {
     public class ShophubContext : DbContext
@@ -14,13 +15,31 @@ namespace Infrastructure.DatabaseContext
         {
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductCategory> ProductCategorys { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public DbSet<PaymentInfo> PaymentInfos { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<ShippingInfo> ShippingInfos { get; set; }
-        public DbSet<Seller> Sellers { get; set; }
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<ProductCategory> ProductCategorys { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        //public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        //public DbSet<PaymentInfo> PaymentInfos { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
+        //public DbSet<ShippingInfo> ShippingInfos { get; set; }
+        //public DbSet<Seller> Sellers { get; set; }
+
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>(ConfigureUser);
+        }
+
+        private static void ConfigureUser(EntityTypeBuilder<User> entity)
+        {
+          
+            entity.HasIndex(u => new { u.FirstName, u.LastName, u.Email }).IsUnique(false);
+          
+            entity.HasIndex(u => u.CreatedOn);
+
+            entity.HasIndex(u => u.Email).IsUnique();
+        }
+
     }
 }
