@@ -12,6 +12,12 @@ namespace WebService.Controllers
     public class UserManagementController : ControllerBase
     {
         ISender _sender;
+
+        public UserManagementController(ISender sender)
+        {
+            _sender = sender;
+        }
+
         // GET: api/<UserManagement>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -28,7 +34,7 @@ namespace WebService.Controllers
 
         // POST api/<UserManagement>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateUserCommand command)
+        public async Task<ActionResult<ShopHubResponseModel>> Post([FromBody] CreateUserCommand command)
         {
             var result = await _sender.Send(command);
             return Ok(result);

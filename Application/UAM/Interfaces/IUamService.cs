@@ -10,6 +10,6 @@ namespace Application.UAM.Interfaces
 {
     public interface IUamService
     {
-        public Task<ServiceResponse> CreateUserAsync(CreateUserCommand command);
+        public Task<ShopHubResponseModel> CreateUserAsync(CreateUserCommand command);
     }
 }
