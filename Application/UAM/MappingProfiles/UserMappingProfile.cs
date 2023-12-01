@@ -11,7 +11,7 @@ namespace Application.UAM.MappingProfiles
         {
             CreateMap<CreateUserCommand, User>()
                 .ForMember(dest => dest.ItemId,
-                opt => opt.MapFrom(src => Guid.NewGuid().ToString())).ForMember(x => x.BirthDate, opt => opt.MapFrom(src => src.DateOfBirth.SetKindUtc()));
+                opt => opt.MapFrom(src => Guid.NewGuid().ToString()));
         }
     }
 }

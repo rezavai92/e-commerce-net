@@ -13,8 +13,8 @@ namespace Domain.Entities
 
         [Key]
         public string ItemId { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.Now; 
-        public DateTime UpdatedOn { get; set;} = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow; 
+        public DateTime UpdatedOn { get; set;} = DateTime.UtcNow;
         public bool IsMarkedToDelete { get; set; } = false;
         public string[] RolesAllowedToRead { get; set; } = new string[0];   
 

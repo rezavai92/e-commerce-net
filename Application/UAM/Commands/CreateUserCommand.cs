@@ -9,7 +9,7 @@ namespace Application.UAM.Commands
         string Email,
         Address? Address,
         string Password,
-        DateTime DateOfBirth,
+        DateOnly DateOfBirth,
         string? PhoneNumber
         ) : ICommand ;
 }

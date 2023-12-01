@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShophubContext))]
-    [Migration("20231201062506_initial")]
-    partial class initial
+    [Migration("20231201130908_make indexes and email unique 1")]
+    partial class makeindexesandemailunique1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,11 +31,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ItemId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -96,9 +96,16 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text[]");
 
                     b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("CreatedOn");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("FirstName", "LastName", "Email");
 
                     b.ToTable("Users");
                 });
