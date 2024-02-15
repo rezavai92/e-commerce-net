@@ -23,6 +23,13 @@ namespace Application.shared.Models
             Message = "Request processed successfully";
         }
 
+        public void SetSuccess(dynamic data)
+        {
+            StatusCode = (int)HttpStatusCode.OK;
+            IsValid = true;
+            Message = "Request processed successfully";
+            Data = data;
+        }
         public void SetSuccess(HttpStatusCode code,string message= "")
         {
             StatusCode = (int)code;

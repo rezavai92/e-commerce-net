@@ -1,5 +1,7 @@
-﻿using Application.shared.Models;
+﻿using Application.Blog.Interfaces;
+using Application.shared.Models;
 using Application.UAM.Commands;
+using Application.UAM.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +14,13 @@ namespace WebService.Controllers
     public class UserManagementController : ControllerBase
     {
         ISender _sender;
+        IBlogService _blogService;
 
-        public UserManagementController(ISender sender)
+
+        public UserManagementController(ISender sender, IBlogService blogService)
         {
             _sender = sender;
+            _blogService = blogService;
         }
 
         // GET: api/<UserManagement>
@@ -27,9 +32,11 @@ namespace WebService.Controllers
 
         // GET api/<UserManagement>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<ShopHubResponseModel>> Get([FromRoute] string id)
         {
-            return "value";
+            var query = new GetUserByIdQuery(id);
+            var result = await _sender.Send(query);
+            return Ok(result);
         }
 
         // POST api/<UserManagement>
@@ -50,6 +57,16 @@ namespace WebService.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet("getposts")]
+        public async Task<ActionResult<ShopHubResponseModel>> GetPosts()
+        {
+
+            var result = await _blogService.GetBlogsAsync();
+
+            return result;
+
         }
     }
 }

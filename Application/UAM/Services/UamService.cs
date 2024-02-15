@@ -38,5 +38,30 @@ namespace Application.UAM.Services
                 return response;
             }
         }
+
+        public Task<ShopHubResponseModel> CreateUsersAsync(CreateUserCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ShopHubResponseModel> GetUserAsync(CreateUserCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ShopHubResponseModel> GetUsersAsync(CreateUserCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ShopHubResponseModel> UpdateUserAsync(CreateUserCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ShopHubResponseModel> UpdateUsersAsync(CreateUserCommand command)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

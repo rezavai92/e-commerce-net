@@ -15,6 +15,7 @@ builder.Services
     .AddInfrastructure()
     .AddApplication();
 
+
 builder.Services.AddDbContext<ShophubContext>((opt) =>
 {
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));

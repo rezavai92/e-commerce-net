@@ -1,4 +1,6 @@
-﻿using Application.shared.Interfaces;
+﻿using Application.Blog.Interfaces;
+using Application.Blog.Services;
+using Application.shared.Interfaces;
 using Application.UAM.Handlers.CommandHandlers;
 using Application.UAM.Interfaces;
 using Application.UAM.Services;
@@ -22,6 +24,7 @@ namespace Application
         //    services.AddSingleton(typeof(CreateUserCommandHandler));
 
             services.AddTransient<IUamService,UamService>();
+            services.AddTransient<IBlogService,BlogService>();
             
 
             return services;
