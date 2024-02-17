@@ -4,6 +4,7 @@ using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using WebService.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -40,7 +41,8 @@ builder.Services.AddDbContext<ShophubContext>((opt) =>
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseGlobalExceptionHandlerMiddleware();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -48,12 +50,10 @@ if (app.Environment.IsDevelopment())
 }
 
 
+
+// Middlewares pipeline
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-app.UseRouting();
-
-
 app.MapControllers();
 
 app.Run();
