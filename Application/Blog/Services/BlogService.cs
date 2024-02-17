@@ -6,6 +6,7 @@ using Application.shared.Models;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,18 @@ namespace Application.Blog.Services
 {
     public class BlogService : IBlogService
     {
-       
+          
         private IRestCommunicationService _restClient;
-
+        
         private IConfiguration _configruation;
 
+        private IPlatformLogger<BlogService> _logger;
 
-        public BlogService(IRestCommunicationService restClient, IConfiguration configruation)
+        public BlogService(IRestCommunicationService restClient, IConfiguration configruation, IPlatformLogger<BlogService> platformLogger)
         {
             _restClient = restClient;
             _configruation = configruation;
+            _logger = platformLogger;
         }
 
         private Uri PrepareBlogUri()
@@ -46,12 +49,13 @@ namespace Application.Blog.Services
                
                 var cts = new CancellationTokenSource();
                 var blogResponse = await _restClient.GetAsync<List<BlogResponseDto>>(PrepareBlogUri(), cts.Token);
-
+                _logger.LogInformation($"Method : {nameof(GetBlogsAsync)}, {JsonConvert.SerializeObject(blogResponse)}");
                 response.SetSuccess(blogResponse);
 
             }
             catch(Exception ex)
             {
+                _logger.LogError($"Method : {nameof(GetBlogsAsync)}, {JsonConvert.SerializeObject(ex.Message)}");
                 response.SetError(HttpStatusCode.InternalServerError,ex.Message);
             }
            

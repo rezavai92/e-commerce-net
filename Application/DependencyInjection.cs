@@ -25,6 +25,7 @@ namespace Application
 
             services.AddTransient<IUamService,UamService>();
             services.AddTransient<IBlogService,BlogService>();
+         
             
 
             return services;

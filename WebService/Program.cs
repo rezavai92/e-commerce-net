@@ -2,7 +2,11 @@ using Application;
 using Infrastructure;
 using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Serilog;
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 
@@ -15,6 +19,15 @@ builder.Services
     .AddInfrastructure()
     .AddApplication();
 
+
+
+
+//configure logger
+
+builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, LoggerConfiguration configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
 
 builder.Services.AddDbContext<ShophubContext>((opt) =>
 {
@@ -34,9 +47,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseRouting();
+
 
 app.MapControllers();
 

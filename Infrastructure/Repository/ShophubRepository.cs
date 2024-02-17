@@ -1,13 +1,14 @@
 ﻿using Application.shared.Interfaces;
 using Domain.Entities;
 using Infrastructure.DatabaseContext;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository
 {
     public class ShophubRepository : IShophubRepository
     {
         ShophubContext _dbContext;
-
+       
         public ShophubRepository(ShophubContext dbContext)
         {
             _dbContext = dbContext;

@@ -7,6 +7,7 @@ namespace Infrastructure.RestCommunication
     public class RestCommunicationService : IRestCommunicationService
     {
         private IHttpClientFactory _httpClientFactory;
+        
 
         public RestCommunicationService(IHttpClientFactory httpClientFactory)
         {
