@@ -59,14 +59,6 @@ namespace WebService.Controllers
         {
         }
 
-        [HttpGet("getposts")]
-        public async Task<ActionResult<ShopHubResponseModel>> GetPosts()
-        {
-
-            var result = await _blogService.GetBlogsAsync();
-
-            return result;
-
-        }
+      
     }
 }

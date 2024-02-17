@@ -5,11 +5,13 @@ using Domain.Entities;
 
 namespace Application.UAM.Handlers.QueryHandlers
 {
-    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, User>
+    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery>
     {
-        public Task<ShopHubResponseModel<User>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ShopHubResponseModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+           Task.Delay(500).Wait();
+
+            return new ShopHubResponseModel();  
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Application.shared.Interfaces
     {
     }
 
-    public interface ICommand<TResponse> : IRequest<ShopHubResponseModel<TResponse>>
+    public interface ICommand<TResponse> : IRequest<TResponse>
     {
     }
 }

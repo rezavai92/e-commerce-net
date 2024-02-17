@@ -7,7 +7,7 @@ namespace Application.shared.Interfaces
     {
     }
 
-    public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, ShopHubResponseModel<TResponse>> where TCommand : ICommand<TResponse>
+    public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, TResponse> where TCommand : ICommand<TResponse>
     {
     }
 }

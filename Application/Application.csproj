@@ -21,4 +21,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Blog\Commands\" />
+    <Folder Include="Blog\CommandHandlers\" />
+  </ItemGroup>
+
 </Project>

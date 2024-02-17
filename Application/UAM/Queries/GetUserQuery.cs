@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Application.UAM.Queries
 {
-    public sealed record GetUserByIdQuery(string ItemId) : IQuery<User>;
+    public sealed record GetUserByIdQuery(string ItemId) : IQuery;
 
     public sealed record GetUsersByFilterQuery : GenericSearchFilter
     {
