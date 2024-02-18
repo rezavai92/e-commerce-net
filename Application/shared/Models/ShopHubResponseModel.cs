@@ -16,38 +16,48 @@ namespace Application.shared.Models
             Data = null;
         }
 
-        public void SetSuccess()
+        public ShopHubResponseModel SetSuccess()
         {
             StatusCode = (int)HttpStatusCode.OK;
             IsValid = true;
             Message = "Request processed successfully";
+
+            return this;
         }
 
-        public void SetSuccess(dynamic data)
+        public ShopHubResponseModel SetSuccess(dynamic data)
         {
             StatusCode = (int)HttpStatusCode.OK;
             IsValid = true;
             Message = "Request processed successfully";
             Data = data;
+
+            return this;
         }
-        public void SetSuccess(HttpStatusCode code,string message= "")
+        public ShopHubResponseModel SetSuccess(HttpStatusCode code,string message= "")
         {
             StatusCode = (int)code;
             IsValid = true;
             Message = message;
+
+            return this;
         }
 
-        public void SetError()
+        public ShopHubResponseModel SetError()
         {
             StatusCode = (int)(HttpStatusCode.InternalServerError);
             IsValid = false;
             Message = "Something went wrong";
+
+            return this;
         }
-        public void SetError(HttpStatusCode code, string message="")
+        public ShopHubResponseModel SetError(HttpStatusCode code, string message="")
         {
             StatusCode = (int)(HttpStatusCode.InternalServerError);
             IsValid = false;
             Message = message;
+
+            return this;
         }
     }
 
