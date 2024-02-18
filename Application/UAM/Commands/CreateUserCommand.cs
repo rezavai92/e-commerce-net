@@ -1,5 +1,5 @@
-﻿using Domain.Models;
-using Application.shared.Interfaces;
+﻿using Application.shared.Interfaces;
+using Domain.Entities;
 
 namespace Application.UAM.Commands
 {
@@ -7,7 +7,7 @@ namespace Application.UAM.Commands
         string FirstName,
         string LastName,
         string Email,
-        Address? Address,
+        Location? Address,
         string Password,
         DateOnly DateOfBirth,
         string? PhoneNumber

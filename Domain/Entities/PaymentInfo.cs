@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class PaymentInfo : EntityBase
     {
+        public string OrderId { get; set; }
+        public DateTime PaidOn { get; set; }
+        public string InvoiceId { get; set; }
     }
 }

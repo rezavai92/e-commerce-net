@@ -1,10 +1,5 @@
 ﻿using Domain.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -13,10 +8,12 @@ namespace Domain.Entities
 
         [Key]
         public string ItemId { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow; 
-        public DateTime UpdatedOn { get; set;} = DateTime.UtcNow;
+        public string CreatedByUserId { get; set; }
+        public string LastUpdatedByUserId { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
         public bool IsMarkedToDelete { get; set; } = false;
-        public string[] RolesAllowedToRead { get; set; } = new string[0];   
+        public string[] RolesAllowedToRead { get; set; } = new string[0];
 
         public string[] IdsAllowedToRead { get; set; } = new string[0];
 

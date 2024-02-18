@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Blog\Commands\" />
     <Folder Include="Blog\CommandHandlers\" />
+    <Folder Include="Product\" />
   </ItemGroup>
 
 </Project>

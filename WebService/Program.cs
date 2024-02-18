@@ -7,7 +7,11 @@ using Serilog;
 using WebService.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<ShophubContext>((opt) =>
+{
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 
+});
 
 // Add services to the container.
 
@@ -30,11 +34,7 @@ builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, 
     configuration.ReadFrom.Configuration(context.Configuration);
 });
 
-builder.Services.AddDbContext<ShophubContext>((opt) =>
-{
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-  
-});
+
 
 
 

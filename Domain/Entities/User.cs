@@ -1,11 +1,10 @@
-﻿using Domain.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Entities
 {
-   
+
     public class User : EntityBase
     {
         [MaxLength(50)]    
@@ -22,10 +21,6 @@ namespace Domain.Entities
         [MinLength(8)]
         public required string Password { get; set; }
         public List<string> Roles { get; set; } = new List<string>();
-
-        [NotMapped]
-
-        [AllowNull]
-        public Address? Address { get; set; }
+        public  Location? PrimaryAddress { get; set; }
     }
 }

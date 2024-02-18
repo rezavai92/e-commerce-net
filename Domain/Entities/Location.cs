@@ -1,6 +1,6 @@
-﻿namespace Domain.Models
+﻿namespace Domain.Entities
 {
-    public class Address
+    public class Location : EntityBase
     {
         public string? StreetName { get; set; }
         public string? StreetNumber { get; set; }
@@ -8,5 +8,7 @@
         public string? State { get; set; }
         public string? PostalCode { get; set; }
         public string? Country { get; set; }
+        public double? Lat { get; set; }
+        public double? Long { get; set; }
     }
 }
