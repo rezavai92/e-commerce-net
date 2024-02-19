@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Domain.Entities
 {
@@ -21,6 +22,8 @@ namespace Domain.Entities
         [MinLength(8)]
         public required string Password { get; set; }
         public List<string> Roles { get; set; } = new List<string>();
-        public  Location? PrimaryAddress { get; set; }
+        //    public  string PrimaryAddressId { get; set; }
+
+        public Customer Customer { get; set; }
     }
 }

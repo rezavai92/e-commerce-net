@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Application.UAM.Handlers.QueryHandlers
 {
-    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery>
+    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery,ShopHubResponseModel>
     {
         public async Task<ShopHubResponseModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {

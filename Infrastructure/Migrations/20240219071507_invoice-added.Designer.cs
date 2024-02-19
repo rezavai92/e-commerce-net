@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShophubContext))]
-    [Migration("20240218041110_MoreEntities")]
-    partial class MoreEntities
+    [Migration("20240219071507_invoice-added")]
+    partial class invoiceadded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -62,7 +61,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -99,7 +97,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -128,7 +125,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string[]>("RolesAllowedToDelete")
@@ -164,12 +160,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ItemId")
                         .HasColumnType("text");
 
-                    b.Property<string>("BillingAddressItemId")
-                        .IsRequired()
+                    b.Property<string>("BillingLocationItemId")
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -195,7 +189,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string[]>("RolesAllowedToDelete")
@@ -217,13 +210,16 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ItemId");
 
-                    b.HasIndex("BillingAddressItemId");
+                    b.HasIndex("BillingLocationItemId");
+
+                    b.HasIndex("UserItemId")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -234,7 +230,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -260,14 +255,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("OrderId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PaymentId")
+                    b.Property<string>("OrderItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -291,6 +281,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("OrderItemId")
+                        .IsUnique();
 
                     b.ToTable("Invoices");
                 });
@@ -307,7 +300,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -333,7 +325,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double?>("Lat")
@@ -375,7 +366,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
@@ -386,22 +377,17 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("ApprovedByUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CouponId")
+                    b.Property<string>("CouponItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("CustomerId")
+                    b.Property<string>("CustomerItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -427,31 +413,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
-                    b.Property<string>("InvoiceId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsMarkedToDelete")
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("OrderedOn")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("PaymentId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PrductId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string[]>("RolesAllowedToDelete")
                         .IsRequired()
@@ -469,10 +438,20 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("ShippingInfoId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("CouponItemId");
+
+                    b.HasIndex("CustomerItemId");
+
+                    b.HasIndex("ShippingInfoId");
 
                     b.ToTable("Orders");
                 });
@@ -483,7 +462,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -505,23 +483,22 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
-                    b.Property<string>("InvoiceId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsMarkedToDelete")
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("OrderId")
+                    b.Property<string>("OrderItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PaidOn")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string[]>("RolesAllowedToDelete")
                         .IsRequired()
@@ -544,6 +521,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("ItemId");
 
+                    b.HasIndex("OrderItemId")
+                        .IsUnique();
+
                     b.ToTable("PaymentInfos");
                 });
 
@@ -552,12 +532,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ItemId")
                         .HasColumnType("text");
 
-                    b.Property<string>("CategoryId")
+                    b.Property<string>("BrandItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -587,7 +566,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("Price")
@@ -633,6 +611,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("ItemId");
 
+                    b.HasIndex("BrandItemId")
+                        .IsUnique();
+
                     b.ToTable("Products");
                 });
 
@@ -641,8 +622,15 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ItemId")
                         .HasColumnType("text");
 
-                    b.Property<string>("CreatedByUserId")
+                    b.Property<string>("Alias")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedByUserId")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -668,11 +656,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string[]>("RolesAllowedToDelete")
@@ -704,12 +687,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ItemId")
                         .HasColumnType("text");
 
-                    b.Property<string>("BillingLocationId")
+                    b.Property<string>("BillingLocationItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -735,14 +717,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("Method")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("OrderId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string[]>("RolesAllowedToDelete")
@@ -761,17 +735,25 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("ShippingMethod")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("TrackingNumber")
-                        .HasColumnType("bigint");
+                    b.Property<string>("TrackingNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("BillingLocationItemId")
+                        .IsUnique();
 
                     b.ToTable("ShippingInfos");
                 });
@@ -782,13 +764,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("CustomerId")
+                    b.Property<string>("CustomerItemId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -812,12 +793,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string[]>("ProductIds")
-                        .IsRequired()
-                        .HasColumnType("text[]");
 
                     b.Property<string[]>("RolesAllowedToDelete")
                         .IsRequired()
@@ -840,6 +816,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("ItemId");
 
+                    b.HasIndex("CustomerItemId")
+                        .IsUnique();
+
                     b.ToTable("ShoppingCarts");
                 });
 
@@ -849,7 +828,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -893,7 +871,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("LastUpdatedByUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
@@ -903,9 +880,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
-
-                    b.Property<string>("PrimaryAddressItemId")
-                        .HasColumnType("text");
 
                     b.Property<List<string>>("Roles")
                         .IsRequired()
@@ -937,31 +911,244 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("PrimaryAddressItemId");
-
                     b.HasIndex("FirstName", "LastName", "Email");
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<string>("CustomerOrdersItemId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProductItemId")
+                        .HasColumnType("text");
+
+                    b.HasKey("CustomerOrdersItemId", "ProductItemId");
+
+                    b.HasIndex("ProductItemId");
+
+                    b.ToTable("OrderProduct");
+                });
+
+            modelBuilder.Entity("ProductProductCategory", b =>
+                {
+                    b.Property<string>("CategoriesItemId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProductsItemId")
+                        .HasColumnType("text");
+
+                    b.HasKey("CategoriesItemId", "ProductsItemId");
+
+                    b.HasIndex("ProductsItemId");
+
+                    b.ToTable("ProductProductCategory");
+                });
+
+            modelBuilder.Entity("ProductShoppingCart", b =>
+                {
+                    b.Property<string>("ProductsItemId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ShoppingCartsItemId")
+                        .HasColumnType("text");
+
+                    b.HasKey("ProductsItemId", "ShoppingCartsItemId");
+
+                    b.HasIndex("ShoppingCartsItemId");
+
+                    b.ToTable("ProductShoppingCart");
+                });
+
             modelBuilder.Entity("Domain.Entities.Customer", b =>
                 {
-                    b.HasOne("Domain.Entities.Location", "BillingAddress")
-                        .WithMany()
-                        .HasForeignKey("BillingAddressItemId")
+                    b.HasOne("Domain.Entities.Location", "BillingLocation")
+                        .WithMany("BillingCustomers")
+                        .HasForeignKey("BillingLocationItemId");
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithOne("Customer")
+                        .HasForeignKey("Domain.Entities.Customer", "UserItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BillingAddress");
+                    b.Navigation("BillingLocation");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Invoice", b =>
+                {
+                    b.HasOne("Domain.Entities.Order", "Order")
+                        .WithOne("Invoice")
+                        .HasForeignKey("Domain.Entities.Invoice", "OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Order", b =>
+                {
+                    b.HasOne("Domain.Entities.Coupon", "Coupon")
+                        .WithMany("Orders")
+                        .HasForeignKey("CouponItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ShippingInfo", "ShippingInfo")
+                        .WithMany("CustomerOrders")
+                        .HasForeignKey("ShippingInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coupon");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("ShippingInfo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PaymentInfo", b =>
+                {
+                    b.HasOne("Domain.Entities.Order", "Order")
+                        .WithOne("PaymentInfo")
+                        .HasForeignKey("Domain.Entities.PaymentInfo", "OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Product", b =>
+                {
+                    b.HasOne("Domain.Entities.Brand", "Brand")
+                        .WithOne("Product")
+                        .HasForeignKey("Domain.Entities.Product", "BrandItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ShippingInfo", b =>
+                {
+                    b.HasOne("Domain.Entities.Location", "BillingLocation")
+                        .WithOne("ShippingInfo")
+                        .HasForeignKey("Domain.Entities.ShippingInfo", "BillingLocationItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BillingLocation");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ShoppingCart", b =>
+                {
+                    b.HasOne("Domain.Entities.Customer", "Customer")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("Domain.Entities.ShoppingCart", "CustomerItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("Domain.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerOrdersItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductProductCategory", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductCategory", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductShoppingCart", b =>
+                {
+                    b.HasOne("Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ShoppingCart", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartsItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Brand", b =>
+                {
+                    b.Navigation("Product")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Coupon", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("ShoppingCart")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Location", b =>
+                {
+                    b.Navigation("BillingCustomers");
+
+                    b.Navigation("ShippingInfo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Order", b =>
+                {
+                    b.Navigation("Invoice")
+                        .IsRequired();
+
+                    b.Navigation("PaymentInfo")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.ShippingInfo", b =>
+                {
+                    b.Navigation("CustomerOrders");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.HasOne("Domain.Entities.Location", "PrimaryAddress")
-                        .WithMany()
-                        .HasForeignKey("PrimaryAddressItemId");
-
-                    b.Navigation("PrimaryAddress");
+                    b.Navigation("Customer")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

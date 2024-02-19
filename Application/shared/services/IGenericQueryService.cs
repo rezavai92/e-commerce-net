@@ -1,10 +1,10 @@
 ﻿using Application.shared.Models;
-using Application.shared.Queries;
+using System.Linq.Expressions;
 
 namespace Application.shared.services
 {
     public interface IGenericQueryService
     {
-        Task<ShopHubResponseModel> GetItemByIdAsync<TEntity>(TEntity entity,string ItemId) where TEntity : class;
+        Task<ShopHubResponseModel> GetItemByIdAsync<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : class;
     }
 }

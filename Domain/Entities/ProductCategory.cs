@@ -2,6 +2,8 @@
 {
     public class ProductCategory : EntityBase
     {
-        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Alias { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

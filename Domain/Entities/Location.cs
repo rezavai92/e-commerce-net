@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace Domain.Entities
 {
     public class Location : EntityBase
     {
@@ -10,5 +12,8 @@
         public string? Country { get; set; }
         public double? Lat { get; set; }
         public double? Long { get; set; }
+        public ICollection<Customer>? BillingCustomers { get; set; }
+
+        public ShippingInfo? ShippingInfo { get; set; }
     }
 }

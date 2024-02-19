@@ -1,5 +1,7 @@
 ﻿using Application.shared.Interfaces;
 using Application.shared.Models;
+using Domain.Entities;
+using System.Linq.Expressions;
 
 namespace Application.shared.services
 {
@@ -12,11 +14,11 @@ namespace Application.shared.services
             _repo = repo;
         }
 
-        public async Task<ShopHubResponseModel> GetItemByIdAsync<TEntity>(TEntity entity, string ItemId) where TEntity : class
+        public async Task<ShopHubResponseModel> GetItemByIdAsync<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : class
         {
             var response = new ShopHubResponseModel();
 
-            entity = await _repo.GetItemAsync<TEntity>();
+            var entity = await _repo.GetItemAsync<TEntity>(filter);
 
             return response.SetSuccess(entity);
 

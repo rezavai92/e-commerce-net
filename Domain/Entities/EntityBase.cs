@@ -7,9 +7,10 @@ namespace Domain.Entities
     {
 
         [Key]
+        [Required]
         public string ItemId { get; set; }
-        public string CreatedByUserId { get; set; }
-        public string LastUpdatedByUserId { get; set; }
+        public string? CreatedByUserId { get; set; }
+        public string? LastUpdatedByUserId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
         public bool IsMarkedToDelete { get; set; } = false;

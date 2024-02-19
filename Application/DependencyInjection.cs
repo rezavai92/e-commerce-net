@@ -3,6 +3,7 @@ using Application.Blog.Services;
 using Application.ProductApp.Interfaces;
 using Application.ProductApp.Services;
 using Application.shared.Interfaces;
+using Application.shared.services;
 using Application.UAM.Handlers.CommandHandlers;
 using Application.UAM.Interfaces;
 using Application.UAM.Services;
@@ -28,6 +29,7 @@ namespace Application
             services.AddTransient<IUamService,UamService>();
             services.AddTransient<IBlogService,BlogService>();
             services.AddTransient<IproductService,ProductService>();
+            services.AddTransient<IGenericQueryService,GenericQueryService>();
          
             
 

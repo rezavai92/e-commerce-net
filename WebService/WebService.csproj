@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Seeds\Brand.json" />
+    <Content Remove="Seeds\Customer.json" />
+    <Content Remove="Seeds\Order.json" />
+    <Content Remove="Seeds\Product.json" />
+    <Content Remove="Seeds\ProductCategory.json" />
+    <Content Remove="Seeds\User.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
@@ -23,6 +32,15 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Seeds\Brand.json" />
+    <None Include="Seeds\Customer.json" />
+    <None Include="Seeds\Order.json" />
+    <None Include="Seeds\Product.json" />
+    <None Include="Seeds\ProductCategory.json" />
+    <None Include="Seeds\User.json" />
   </ItemGroup>
 
 </Project>

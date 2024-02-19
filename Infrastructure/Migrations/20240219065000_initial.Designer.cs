@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShophubContext))]
-    partial class ShophubContextModelSnapshot : ModelSnapshot
+    [Migration("20240219065000_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,70 +222,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Invoice", b =>
-                {
-                    b.Property<string>("ItemId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreatedByUserId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string[]>("IdsAllowedToDelete")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<string[]>("IdsAllowedToRead")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<string[]>("IdsAllowedToUpdate")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<string[]>("IdsAllowedToWrite")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<bool>("IsMarkedToDelete")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastUpdatedByUserId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OrderItemId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string[]>("RolesAllowedToDelete")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<string[]>("RolesAllowedToRead")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<string[]>("RolesAllowedToUpdate")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<string[]>("RolesAllowedToWrite")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("ItemId");
-
-                    b.HasIndex("OrderItemId")
-                        .IsUnique();
-
-                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("Domain.Entities.Location", b =>
@@ -521,7 +460,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("OrderItemId")
                         .IsUnique();
 
-                    b.ToTable("PaymentInfos");
+                    b.ToTable("PaymentInfo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -752,7 +691,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("BillingLocationItemId")
                         .IsUnique();
 
-                    b.ToTable("ShippingInfos");
+                    b.ToTable("ShippingInfo");
                 });
 
             modelBuilder.Entity("Domain.Entities.ShoppingCart", b =>
@@ -816,7 +755,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CustomerItemId")
                         .IsUnique();
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -975,17 +914,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Invoice", b =>
-                {
-                    b.HasOne("Domain.Entities.Order", "Order")
-                        .WithOne("Invoice")
-                        .HasForeignKey("Domain.Entities.Invoice", "OrderItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
                     b.HasOne("Domain.Entities.Coupon", "Coupon")
@@ -1130,9 +1058,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
-                    b.Navigation("Invoice")
-                        .IsRequired();
-
                     b.Navigation("PaymentInfo")
                         .IsRequired();
                 });

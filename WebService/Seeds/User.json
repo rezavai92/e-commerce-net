@@ -1,0 +1,14 @@
+[
+  {
+    "ItemId": "29a2e94d-c8b0-48ed-b26d-581cec61a5bc",
+    "FirstName": "John",
+    "LastName": "Doe",
+    "DateOfBirth": "1990-01-01",
+    "Email": "john.doe@example.com",
+    "PhoneNumber": "1234567890",
+    "Password": "securepassword",
+    "Roles": [ "Admin", "User" ],
+    "PrimaryAddressId": "4b6fce0b-9e8b-4886-aeab-d1768c33c633"
+  }
+
+]

@@ -10,10 +10,10 @@ namespace Application.ProductApp.Queries
 {
     public class GetProductsQuery : IQuery<ShopHubResponseModel>
     {
-        public IEnumerable<string> CategoryIds { get; set; }
-        public IEnumerable<string> BrandIds { get; set; }
-        public double MinimumPrice { get; set; }
-        public double MaximumPrice { get; set; }
-        public string SearchKey { get; set; }
+        public List<string> CategoryIds { get; set; } = new List<string>();  
+        public List<string> BrandIds { get; set; } = new List<string>(); 
+        public double? MinimumPrice { get; set; }
+        public double? MaximumPrice { get; set; }
+        public string SearchKey { get; set; } = string.Empty;
     }
 }

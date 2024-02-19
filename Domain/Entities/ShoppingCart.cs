@@ -2,7 +2,13 @@
 {
     public class ShoppingCart : EntityBase
     {
-        public string CustomerId { get; set; }
-        public IEnumerable<string> ProductIds { get; set; } = new List<string>();
+        #region Customer
+        public Customer Customer { get; set; } =new Customer();
+        public string CustomerItemId { get; set; } = string.Empty;  
+        #endregion
+
+        #region Product
+        public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        #endregion
     }
 }
