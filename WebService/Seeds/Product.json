@@ -1,0 +1,32 @@
+[
+  {
+    "ItemId": "91faa9a8-4dc4-48f4-93d3-b755277ec168",
+    "BrandId": "02f207a0-2ca2-449c-91ee-4dd93663a9ee",
+    "Title": "Laptop",
+    "Description": "High-performance laptop with latest specifications",
+    "ProductCode": "LT123",
+    "CategoryId": "b15184ac-a138-4e4f-b386-c8f9919336b7",
+    "Price": 999.99,
+    "PrimaryImageUrl": "https://example.com/laptop.jpg",
+    "SecondaryImageUrls": [
+      "https://example.com/laptop_side1.jpg",
+      "https://example.com/laptop_side2.jpg"
+    ],
+    "RemainingQuantity": 50
+  },
+  {
+    "ItemId": "282b4f75-6341-4f16-9e44-f64750bbd7cf",
+    "BrandId": "a9ebaf93-e2c8-4413-a46c-97c59a713b6d",
+    "Title": "Smartphone",
+    "Description": "Flagship smartphone with advanced features",
+    "ProductCode": "SP456",
+    "CategoryId": "b15184ac-a138-4e4f-b386-c8f9919336b7",
+    "Price": 699.99,
+    "PrimaryImageUrl": "https://example.com/smartphone.jpg",
+    "SecondaryImageUrls": [
+      "https://example.com/smartphone_back.jpg",
+      "https://example.com/smartphone_front.jpg"
+    ],
+    "RemainingQuantity": 100
+  }
+]

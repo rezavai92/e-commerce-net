@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class ProductCategory : EntityBase
     {
+        public required string Title { get; set; } 
+        public string? Alias { get; set; } 
+        public ICollection<Product>? Products { get; set; }
     }
 }

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebService", "WebService\WebService.csproj", "{28AF9DA5-C952-4C62-9CD7-E760DCF9F18A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinService", "WinService\WinService.csproj", "{3D3429F3-6AD2-46E3-88E9-293DD15565E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinService", "WinService\WinService.csproj", "{3D3429F3-6AD2-46E3-88E9-293DD15565E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,7 +2,16 @@ using Application;
 using Infrastructure;
 using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Serilog;
+using WebService.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ShophubContext>((opt) =>
+{
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+});
 
 // Add services to the container.
 
@@ -15,27 +24,36 @@ builder.Services
     .AddInfrastructure()
     .AddApplication();
 
-builder.Services.AddDbContext<ShophubContext>((opt) =>
+
+
+
+//configure logger
+
+builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, LoggerConfiguration configuration) =>
 {
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    configuration.ReadFrom.Configuration(context.Configuration);
 });
 
 
 
 
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseGlobalExceptionHandlerMiddleware();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+
+
+// Middlewares pipeline
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

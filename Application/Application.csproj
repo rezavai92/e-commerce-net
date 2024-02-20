@@ -4,21 +4,33 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UAM\Commands\" />
-    <Folder Include="UAM\Handlers\CommandHandlers\" />
-    <Folder Include="UAM\Handlers\QueryHandlers\" />
-    <Folder Include="UAM\Mappers\" />
-    <Folder Include="UAM\Validators\" />
-    <Folder Include="UAM\Queries\" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.8.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.8.1" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Blog\Commands\" />
+    <Folder Include="Blog\CommandHandlers\" />
+    <Folder Include="CustomerOrder\" />
+    <Folder Include="Payment\" />
+    <Folder Include="shared\Commands\" />
+    <Folder Include="shared\Handlers\CommandHandlers\" />
+    <Folder Include="shared\Handlers\QueryHandlers\" />
+    <Folder Include="shared\Queries\" />
+    <Folder Include="shared\services\" />
   </ItemGroup>
 
 </Project>

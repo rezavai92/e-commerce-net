@@ -1,23 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Domain.Entities
 {
+
     public class User : EntityBase
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string DateOfBirth { get; set; }
-        public string Email { get; set; }   
-        public string PhoneNumber { get; set; } 
-        public string Password { get; set; }
-        public List<string> Roles { get; set; } = new List<string>();
+        [MaxLength(50)]    
+        public required string FirstName { get; set; }
+        [MaxLength(50)]
+        public required string LastName { get; set; }
+        [AllowNull]
+        public DateOnly DateOfBirth { get; set; }
+        [MaxLength(100)]
+        public required string Email { get; set; }
+        [AllowNull]
+        [MaxLength(20)]
+        public string? PhoneNumber { get; set; }
+        [MinLength(8)]
+        public required string Password { get; set; }
+        public required ICollection<Role> Roles { get; set; } 
+        //    public  string PrimaryAddressId { get; set; }
 
-        public Address Address { get; set; }
-       
+        public Customer? Customer { get; set; }
     }
 }

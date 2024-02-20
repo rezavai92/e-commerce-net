@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class ShoppingCart : EntityBase
     {
+        #region Customer
+        public required Customer Customer { get; set; } 
+        public required string CustomerItemId { get; set; } 
+        #endregion
+
+        #region Product
+        public ICollection<Product>? Products { get; set; } 
+        #endregion
     }
 }
