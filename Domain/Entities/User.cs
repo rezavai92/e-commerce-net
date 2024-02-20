@@ -21,9 +21,9 @@ namespace Domain.Entities
         public string? PhoneNumber { get; set; }
         [MinLength(8)]
         public required string Password { get; set; }
-        public List<string> Roles { get; set; } = new List<string>();
+        public required ICollection<Role> Roles { get; set; } 
         //    public  string PrimaryAddressId { get; set; }
 
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
     }
 }

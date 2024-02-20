@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -7,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,12 +68,12 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<string>(type: "text", nullable: false),
-                    StreetName = table.Column<string>(type: "text", nullable: true),
-                    StreetNumber = table.Column<string>(type: "text", nullable: true),
-                    City = table.Column<string>(type: "text", nullable: true),
+                    StreetName = table.Column<string>(type: "text", nullable: false),
+                    StreetNumber = table.Column<string>(type: "text", nullable: false),
+                    City = table.Column<string>(type: "text", nullable: false),
                     State = table.Column<string>(type: "text", nullable: true),
-                    PostalCode = table.Column<string>(type: "text", nullable: true),
-                    Country = table.Column<string>(type: "text", nullable: true),
+                    PostalCode = table.Column<string>(type: "text", nullable: false),
+                    Country = table.Column<string>(type: "text", nullable: false),
                     Lat = table.Column<double>(type: "double precision", nullable: true),
                     Long = table.Column<double>(type: "double precision", nullable: true),
                     CreatedByUserId = table.Column<string>(type: "text", nullable: true),
@@ -101,8 +100,8 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<string>(type: "text", nullable: false),
-                    Category = table.Column<string>(type: "text", nullable: false),
-                    Alias = table.Column<string>(type: "text", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
+                    Alias = table.Column<string>(type: "text", nullable: true),
                     CreatedByUserId = table.Column<string>(type: "text", nullable: true),
                     LastUpdatedByUserId = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -123,6 +122,31 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    ItemId = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    CreatedByUserId = table.Column<string>(type: "text", nullable: true),
+                    LastUpdatedByUserId = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    IsMarkedToDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    RolesAllowedToRead = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToRead = table.Column<string[]>(type: "text[]", nullable: false),
+                    RolesAllowedToWrite = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToWrite = table.Column<string[]>(type: "text[]", nullable: false),
+                    RolesAllowedToUpdate = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToUpdate = table.Column<string[]>(type: "text[]", nullable: false),
+                    RolesAllowedToDelete = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToDelete = table.Column<string[]>(type: "text[]", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.ItemId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -133,7 +157,6 @@ namespace Infrastructure.Migrations
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    Roles = table.Column<List<string>>(type: "text[]", nullable: false),
                     CreatedByUserId = table.Column<string>(type: "text", nullable: true),
                     LastUpdatedByUserId = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -159,11 +182,11 @@ namespace Infrastructure.Migrations
                 {
                     ItemId = table.Column<string>(type: "text", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     ProductCode = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false),
-                    PrimaryImageUrl = table.Column<string>(type: "text", nullable: false),
-                    SecondaryImageUrls = table.Column<string[]>(type: "text[]", nullable: false),
+                    PrimaryImageUrl = table.Column<string>(type: "text", nullable: true),
+                    SecondaryImageUrls = table.Column<string[]>(type: "text[]", nullable: true),
                     RemainingQuantity = table.Column<long>(type: "bigint", nullable: false),
                     BrandItemId = table.Column<string>(type: "text", nullable: false),
                     CreatedByUserId = table.Column<string>(type: "text", nullable: true),
@@ -192,7 +215,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShippingInfo",
+                name: "ShippingInfos",
                 columns: table => new
                 {
                     ItemId = table.Column<string>(type: "text", nullable: false),
@@ -216,9 +239,9 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShippingInfo", x => x.ItemId);
+                    table.PrimaryKey("PK_ShippingInfos", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_ShippingInfo_Locations_BillingLocationItemId",
+                        name: "FK_ShippingInfos_Locations_BillingLocationItemId",
                         column: x => x.BillingLocationItemId,
                         principalTable: "Locations",
                         principalColumn: "ItemId",
@@ -263,6 +286,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RoleUser",
+                columns: table => new
+                {
+                    RolesItemId = table.Column<string>(type: "text", nullable: false),
+                    UsersItemId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesItemId, x.UsersItemId });
+                    table.ForeignKey(
+                        name: "FK_RoleUser_Roles_RolesItemId",
+                        column: x => x.RolesItemId,
+                        principalTable: "Roles",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoleUser_Users_UsersItemId",
+                        column: x => x.UsersItemId,
+                        principalTable: "Users",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductProductCategory",
                 columns: table => new
                 {
@@ -294,10 +341,10 @@ namespace Infrastructure.Migrations
                     OrderedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     DeliveredOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Amount = table.Column<double>(type: "double precision", nullable: false),
-                    Discount = table.Column<double>(type: "double precision", nullable: false),
+                    Discount = table.Column<double>(type: "double precision", nullable: true),
                     CouponItemId = table.Column<string>(type: "text", nullable: false),
                     CustomerItemId = table.Column<string>(type: "text", nullable: false),
-                    ShippingInfoId = table.Column<string>(type: "text", nullable: false),
+                    ShippingInfoId = table.Column<string>(type: "text", nullable: true),
                     CreatedByUserId = table.Column<string>(type: "text", nullable: true),
                     LastUpdatedByUserId = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -328,15 +375,14 @@ namespace Infrastructure.Migrations
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_ShippingInfo_ShippingInfoId",
+                        name: "FK_Orders_ShippingInfos_ShippingInfoId",
                         column: x => x.ShippingInfoId,
-                        principalTable: "ShippingInfo",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "ShippingInfos",
+                        principalColumn: "ItemId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingCart",
+                name: "ShoppingCarts",
                 columns: table => new
                 {
                     ItemId = table.Column<string>(type: "text", nullable: false),
@@ -357,11 +403,42 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCart", x => x.ItemId);
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_ShoppingCart_Customers_CustomerItemId",
+                        name: "FK_ShoppingCarts_Customers_CustomerItemId",
                         column: x => x.CustomerItemId,
                         principalTable: "Customers",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invoices",
+                columns: table => new
+                {
+                    ItemId = table.Column<string>(type: "text", nullable: false),
+                    OrderItemId = table.Column<string>(type: "text", nullable: false),
+                    CreatedByUserId = table.Column<string>(type: "text", nullable: true),
+                    LastUpdatedByUserId = table.Column<string>(type: "text", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    IsMarkedToDelete = table.Column<bool>(type: "boolean", nullable: false),
+                    RolesAllowedToRead = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToRead = table.Column<string[]>(type: "text[]", nullable: false),
+                    RolesAllowedToWrite = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToWrite = table.Column<string[]>(type: "text[]", nullable: false),
+                    RolesAllowedToUpdate = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToUpdate = table.Column<string[]>(type: "text[]", nullable: false),
+                    RolesAllowedToDelete = table.Column<string[]>(type: "text[]", nullable: false),
+                    IdsAllowedToDelete = table.Column<string[]>(type: "text[]", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.ItemId);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Orders_OrderItemId",
+                        column: x => x.OrderItemId,
+                        principalTable: "Orders",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -391,7 +468,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PaymentInfo",
+                name: "PaymentInfos",
                 columns: table => new
                 {
                     ItemId = table.Column<string>(type: "text", nullable: false),
@@ -414,9 +491,9 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PaymentInfo", x => x.ItemId);
+                    table.PrimaryKey("PK_PaymentInfos", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_PaymentInfo_Orders_OrderItemId",
+                        name: "FK_PaymentInfos_Orders_OrderItemId",
                         column: x => x.OrderItemId,
                         principalTable: "Orders",
                         principalColumn: "ItemId",
@@ -440,9 +517,9 @@ namespace Infrastructure.Migrations
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductShoppingCart_ShoppingCart_ShoppingCartsItemId",
+                        name: "FK_ProductShoppingCart_ShoppingCarts_ShoppingCartsItemId",
                         column: x => x.ShoppingCartsItemId,
-                        principalTable: "ShoppingCart",
+                        principalTable: "ShoppingCarts",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -456,6 +533,12 @@ namespace Infrastructure.Migrations
                 name: "IX_Customers_UserItemId",
                 table: "Customers",
                 column: "UserItemId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_OrderItemId",
+                table: "Invoices",
+                column: "OrderItemId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -479,8 +562,8 @@ namespace Infrastructure.Migrations
                 column: "ShippingInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentInfo_OrderItemId",
-                table: "PaymentInfo",
+                name: "IX_PaymentInfos_OrderItemId",
+                table: "PaymentInfos",
                 column: "OrderItemId",
                 unique: true);
 
@@ -497,18 +580,22 @@ namespace Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandItemId",
                 table: "Products",
-                column: "BrandItemId",
-                unique: true);
+                column: "BrandItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShippingInfo_BillingLocationItemId",
-                table: "ShippingInfo",
+                name: "IX_RoleUser_UsersItemId",
+                table: "RoleUser",
+                column: "UsersItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShippingInfos_BillingLocationItemId",
+                table: "ShippingInfos",
                 column: "BillingLocationItemId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCart_CustomerItemId",
-                table: "ShoppingCart",
+                name: "IX_ShoppingCarts_CustomerItemId",
+                table: "ShoppingCarts",
                 column: "CustomerItemId",
                 unique: true);
 
@@ -533,16 +620,22 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Invoices");
+
+            migrationBuilder.DropTable(
                 name: "OrderProduct");
 
             migrationBuilder.DropTable(
-                name: "PaymentInfo");
+                name: "PaymentInfos");
 
             migrationBuilder.DropTable(
                 name: "ProductProductCategory");
 
             migrationBuilder.DropTable(
                 name: "ProductShoppingCart");
+
+            migrationBuilder.DropTable(
+                name: "RoleUser");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -554,13 +647,16 @@ namespace Infrastructure.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCart");
+                name: "ShoppingCarts");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Coupons");
 
             migrationBuilder.DropTable(
-                name: "ShippingInfo");
+                name: "ShippingInfos");
 
             migrationBuilder.DropTable(
                 name: "Brands");

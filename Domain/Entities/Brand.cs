@@ -2,9 +2,9 @@
 {
     public class Brand : EntityBase
     {
-        public string Name { get; set; }
-        public string Country { get; set; }
-        public Product Product { get; set; }
+        public required string Name { get; set; }
+        public required string Country { get; set; } 
+        public ICollection<Product>? Products { get; set; } = new List<Product>();
         
     }
 }

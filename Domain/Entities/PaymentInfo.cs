@@ -3,11 +3,11 @@
     public class PaymentInfo : EntityBase
     {
         #region Order
-        public Order Order { get; set; }
-        public string OrderItemId { get; set; } = string.Empty;
+        public required Order Order { get; set; }
+        public required string OrderItemId { get; set; }
 
         #endregion
         public DateTime PaidOn { get; set; }
-        public string PaymentType { get; set; }
+        public required string PaymentType { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Domain.Entities
 
         [Key]
         [Required]
-        public string ItemId { get; set; }
+        public required string ItemId { get; set; }
         public string? CreatedByUserId { get; set; }
         public string? LastUpdatedByUserId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;

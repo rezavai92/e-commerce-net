@@ -10,10 +10,11 @@ namespace Application.ProductApp.Commands
 {
     public class CreateProductCommand : ICommand<ShopHubResponseModel>
     {
-        public string Title { get; set; }
+        public required  string Title { get; set; }
         public string Description { get; set; }
         public string ProductCode { get; set; }
-        public string CategoryId { get; set; }
+        public IEnumerable<string> CategoryIds { get; set; } = Enumerable.Empty<string>();
+        public string BrandId { get; set; }
         public double Price { get; set; }
         public string PrimaryImageUrl { get; set; }
         public IEnumerable<string> SecondaryImageUrls { get; set; } = Enumerable.Empty<string>();

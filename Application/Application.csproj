@@ -24,10 +24,13 @@
   <ItemGroup>
     <Folder Include="Blog\Commands\" />
     <Folder Include="Blog\CommandHandlers\" />
+    <Folder Include="CustomerOrder\" />
+    <Folder Include="Payment\" />
     <Folder Include="shared\Commands\" />
     <Folder Include="shared\Handlers\CommandHandlers\" />
     <Folder Include="shared\Handlers\QueryHandlers\" />
     <Folder Include="shared\Queries\" />
+    <Folder Include="shared\services\" />
   </ItemGroup>
 
 </Project>

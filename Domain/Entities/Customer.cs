@@ -1,16 +1,18 @@
-﻿namespace Domain.Entities
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Domain.Entities
 {
     public class Customer : EntityBase
     {
         #region User
-        public User User  { get; set; }
+        public required User User { get; set; } 
 
-        public string UserItemId { get; set; }
+        public required string UserItemId { get; set; }
 
         #endregion
 
         #region Order
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
         #endregion
 
         #region Billing Location
@@ -19,7 +21,7 @@
         #endregion
 
         #region Shopping Cart
-        public ShoppingCart ShoppingCart { get; set; } = new ShoppingCart();
+        public ShoppingCart? ShoppingCart { get; set; }
         #endregion
 
 

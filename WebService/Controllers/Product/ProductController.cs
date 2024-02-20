@@ -3,7 +3,6 @@ using Application.ProductApp.Interfaces;
 using Application.ProductApp.Queries;
 using Application.shared.Interfaces;
 using Application.shared.Models;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebService.Controllers.ProductController
@@ -28,25 +27,32 @@ namespace WebService.Controllers.ProductController
 
 
         [HttpGet("GetProducts")]
-        public async Task<ActionResult<ShopHubResponseModel>> GetProducts([FromBody] GetProductsQuery query)
+        public async Task<ShopHubResponseModel> GetProducts([FromBody] GetProductsQuery query)
         {
             return await _queryDispatcher.DispatchAsync<GetProductsQuery>(query);
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult<ShopHubResponseModel>> Get([FromQuery] string id)
+        [HttpGet("GetProductById")]
+        public async Task<ShopHubResponseModel> GetProductById([FromQuery] string id)
         {
-            var result = _productService.GetProductByIdAsync(id);
-            return Ok(result);
+            var result = await _productService.GetProductByIdAsync(id);
+            return result;
+        }
+
+        [HttpGet("GetCategoryById")]
+        public async Task<ShopHubResponseModel> GetCategoryById([FromQuery] string id)
+        {
+            var result = await _productService.GetProductCategoryByIdAsync(id);
+            return result;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ShopHubResponseModel>> Post([FromBody] CreateProductCommand command)
+        public async Task<ShopHubResponseModel> Post([FromBody] CreateProductCommand command)
         {
             var result = await _commandDispatcher.SendLocalAsync<CreateProductCommand>(command);
 
-            return Ok(result);
+            return result;
         }
 
 
@@ -61,6 +67,20 @@ namespace WebService.Controllers.ProductController
         {
         }
 
+        [HttpPost("CreateProductCategory")]
+        public async Task<ShopHubResponseModel> CreateProductCategory([FromBody] CreateProductCategoryCommand command)
+        {
+            var result = await _commandDispatcher.SendLocalAsync<CreateProductCategoryCommand>(command);
 
+            return result;
+        }
+
+        [HttpPost("CreateProductBrand")]
+        public async Task<ShopHubResponseModel> CreateProductBrand([FromBody] CreateProductBrandCommand command)
+        {
+            var result = await _commandDispatcher.SendLocalAsync<CreateProductBrandCommand>(command);
+
+            return result;
+        }
     }
 }

@@ -1,10 +1,8 @@
-﻿using Application.shared.Interfaces;
-using Application.shared.Models;
-using Domain.Entities;
+﻿using Domain.Entities;
 
-namespace Application.ProductApp.Queries
+namespace Domain.Models
 {
-    public class GetProductsQuery : IQuery<ShopHubResponseModel>
+    public class SearchableProductsDto
     {
         public List<string> CategoryIds { get; set; } = new List<string>();
         public List<string> BrandIds { get; set; } = new List<string>();

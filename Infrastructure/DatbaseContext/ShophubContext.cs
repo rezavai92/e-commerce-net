@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 namespace Infrastructure.DatabaseContext
 {
     public class ShophubContext : DbContext
@@ -22,6 +23,7 @@ namespace Infrastructure.DatabaseContext
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
         T GetSeedDataFromJson<T>(string filePath)
@@ -45,23 +47,32 @@ namespace Infrastructure.DatabaseContext
 
             #region Brand Table Relations
 
-            builder.Entity<Brand>().HasOne(e => e.Product).WithOne(e => e.Brand).HasForeignKey<Product>(fk => fk.BrandItemId);
+            builder.Entity<Brand>()
+                .HasMany(e => e.Products)
+                .WithOne(e => e.Brand)
+                .HasForeignKey(fk => fk.BrandItemId)
+                .IsRequired(false);
 
             #endregion
 
             #region User Table Relations
 
             builder.Entity<User>().HasOne(e => e.Customer).WithOne(e => e.User).HasForeignKey<Customer>(fk => fk.UserItemId);
+            builder.Entity<User>().HasMany(e => e.Roles).WithMany(e => e.Users);
 
             #endregion
 
             #region Customer Table relations
-            builder.Entity<Customer>().HasOne(e => e.BillingLocation).WithMany(e => e.BillingCustomers).HasForeignKey(e=>e.BillingLocationItemId);
+            builder.Entity<Customer>()
+                .HasOne(e => e.BillingLocation)
+                .WithMany(e => e.BillingCustomers)
+                .HasForeignKey(e => e.BillingLocationItemId);
+               
             #endregion
 
             #region Order table relations
 
-            builder.Entity<Order>().HasOne(e => e.Coupon).WithMany(e => e.Orders).HasForeignKey(e=>e.CouponItemId);
+            builder.Entity<Order>().HasOne(e => e.Coupon).WithMany(e => e.Orders).HasForeignKey(e=>e.CouponItemId).IsRequired(false);
             builder.Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders).HasForeignKey(e=>e.CustomerItemId);
             builder.Entity<Order>().HasMany(e => e.Product).WithMany(e => e.CustomerOrders);
             builder.Entity<Invoice>().HasOne(e => e.Order).WithOne(e => e.Invoice).HasForeignKey<Invoice>(fk=>fk.OrderItemId);

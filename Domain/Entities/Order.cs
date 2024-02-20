@@ -6,26 +6,26 @@
         public DateTime OrderedOn { get; set; }
         public DateTime DeliveredOn { get; set; }
         public double Amount { get; set; }
-        public double Discount { get; set; }
+        public double? Discount { get; set; }
 
         #region Coupon
-        public Coupon Coupon { get; set; }
-        public string CouponItemId { get; set; }
+        public Coupon? Coupon { get; set; }
+        public string? CouponItemId { get; set; }
         #endregion
 
         #region Customer
-        public Customer Customer { get; set; }
-        public string CustomerItemId { get; set; }
+        public required Customer Customer { get; set; }
+        public required string CustomerItemId { get; set; }
         #endregion Customer
 
         #region Product
-        public ICollection<Product> Product { get; set; }
+        public required ICollection<Product> Product { get; set; }
 
         #endregion
 
         #region Shipping Info
-        public ShippingInfo ShippingInfo { get; set; } = new ShippingInfo();
-        public string ShippingInfoId { get; set; } = string.Empty;
+        public ShippingInfo? ShippingInfo { get; set; }
+        public string? ShippingInfoId { get; set; } 
         #endregion
 
         #region Payment Info
@@ -36,7 +36,7 @@
         //public User ApprovedByUser { get; set; }
         #region Invoice
 
-        public Invoice Invoice { get; set; }
+        public Invoice? Invoice { get; set; }
 
         #endregion
     }

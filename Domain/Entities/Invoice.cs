@@ -2,8 +2,8 @@
 {
     public class Invoice : EntityBase
     {
-        public Order Order { get; set; }
-        public string OrderItemId { get; set; } = string.Empty;
+        public required Order Order { get; set; }
+        public required string OrderItemId { get; set; } 
         
     }
 }

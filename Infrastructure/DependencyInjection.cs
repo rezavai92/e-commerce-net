@@ -1,4 +1,6 @@
-﻿using Application.shared.Interfaces;
+﻿using Application.ProductApp.Interfaces;
+using Application.shared.Interfaces;
+using Domain.Interfaces;
 using Infrastructure.Logging;
 using Infrastructure.Mediators;
 using Infrastructure.Repository;
@@ -12,8 +14,13 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddHttpClient();
-            services.AddTransient<IShophubRepository, ShophubRepository>();
+     //       services.AddTransient(typeof(GenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IProductRepository, ProductRepository>() ;
+            services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>() ;
+            services.AddTransient<IProductBrandRepository, ProductBrandRepository>() ;
+          
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
+            
             services.AddTransient<IQueryDispatcher, QueryDispatcher>();
             services.AddTransient<IRestCommunicationService, RestCommunicationService>();
             services.AddSingleton(typeof(IPlatformLogger<>), typeof(PlatformLoggerService<>));

@@ -2,13 +2,8 @@
 using Application.Blog.Services;
 using Application.ProductApp.Interfaces;
 using Application.ProductApp.Services;
-using Application.shared.Interfaces;
-using Application.shared.services;
-using Application.UAM.Handlers.CommandHandlers;
-using Application.UAM.Interfaces;
-using Application.UAM.Services;
+
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 namespace Application
 {
@@ -24,14 +19,14 @@ namespace Application
 
             services.AddValidatorsFromAssembly(assembly);
 
-        //    services.AddSingleton(typeof(CreateUserCommandHandler));
+            //    services.AddSingleton(typeof(CreateUserCommandHandler));
 
-            services.AddTransient<IUamService,UamService>();
-            services.AddTransient<IBlogService,BlogService>();
-            services.AddTransient<IproductService,ProductService>();
-            services.AddTransient<IGenericQueryService,GenericQueryService>();
-         
             
+            services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IproductService, ProductService>();
+
+
+
 
             return services;
         }
