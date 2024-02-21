@@ -34,11 +34,16 @@ builder.Services
 
 // DI for identity services
 builder.Services
-    .AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddIdentity<ApplicationUser, ApplicationRole>(option =>
+    {
+        option.User.RequireUniqueEmail = true;  
+        
+    })
     .AddEntityFrameworkStores<ShophubContext>()
     .AddDefaultTokenProviders()
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ShophubContext, string>>()
     .AddRoleStore<RoleStore<ApplicationRole, ShophubContext, string>>();
+    
             
 
 
