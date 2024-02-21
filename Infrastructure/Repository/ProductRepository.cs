@@ -51,7 +51,7 @@ namespace Infrastructure.Repository
             .Include(x => x.Categories)
             .Include(x => x.Brand)
             .Where(x =>
-                query.CategoryIds.Contains(x.ItemId) &&
+                (query.CategoryIds.Count== 0 ||  query.CategoryIds.Contains(x.ItemId)) &&
                 x.Price >= query.MinimumPrice && x.Price < query.MaximumPrice &&
                 (query.BrandIds.Count == 0 || query.BrandIds.Contains(x.BrandItemId)) &&
                 (string.IsNullOrEmpty(query.SearchKey) ||

@@ -3,8 +3,14 @@ using Infrastructure;
 using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Serilog;
 using WebService.Middlewares;
+using Newtonsoft.Json.Serialization;
+using Domain.IdentityEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ShophubContext>((opt) =>
@@ -16,6 +22,7 @@ builder.Services.AddDbContext<ShophubContext>((opt) =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,6 +30,18 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddInfrastructure()
     .AddApplication();
+
+
+// DI for identity services
+builder.Services
+    .AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ShophubContext>()
+    .AddDefaultTokenProviders()
+    .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ShophubContext, string>>()
+    .AddRoleStore<RoleStore<ApplicationRole, ShophubContext, string>>();
+            
+
+
 
 
 
@@ -35,11 +54,17 @@ builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, 
 });
 
 
-
+JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+{
+    Formatting = Newtonsoft.Json.Formatting.Indented,
+    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+};
 
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
+
+app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
 app.UseGlobalExceptionHandlerMiddleware();
 

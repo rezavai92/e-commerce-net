@@ -1,13 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Domain.IdentityEntities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Entities
 {
     public class Customer : EntityBase
     {
         #region User
-        public required User User { get; set; } 
+     //   public required User User { get; set; } 
 
-        public required string UserItemId { get; set; }
+        public required string ApplicationUserId { get; set; }
+        public required ApplicationUser ApplicationUser { get; set; }
 
         #endregion
 
