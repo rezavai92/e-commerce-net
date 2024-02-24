@@ -15,6 +15,9 @@ namespace Application.ProductApp.Interfaces
         #region Category
 
         Task<ShopHubResponseModel> GetProductCategoryByIdAsync(string itemId);
+        Task<ShopHubResponseModel> GetProductBrandByIdAsync(string itemId);
+        Task<ShopHubResponseModel> GetProductCategoriesAsync(GetAllProductCategoryQuery query);
+        Task<ShopHubResponseModel> GetProductBrandsAsync(GetAllProductBrandQuery query);
         #endregion
     }
 }

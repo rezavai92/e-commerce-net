@@ -1,16 +1,17 @@
 ﻿using Domain.Entities;
+using Domain.IdentityEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
-using System.Linq.Expressions;
 namespace Infrastructure.DatabaseContext
 {
-    public class ShophubContext : DbContext
+    public class ShophubContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ShophubContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<User> Users { get; set; }
+      //  public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategorys { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -23,7 +24,7 @@ namespace Infrastructure.DatabaseContext
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        //public DbSet<Role> Roles { get; set; }
 
 
         T GetSeedDataFromJson<T>(string filePath)
@@ -37,7 +38,7 @@ namespace Infrastructure.DatabaseContext
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<User>(ConfigureUser);
+        //    builder.Entity<User>(ConfigureUser);
 
             #region Product Table Relations
 
@@ -57,8 +58,8 @@ namespace Infrastructure.DatabaseContext
 
             #region User Table Relations
 
-            builder.Entity<User>().HasOne(e => e.Customer).WithOne(e => e.User).HasForeignKey<Customer>(fk => fk.UserItemId);
-            builder.Entity<User>().HasMany(e => e.Roles).WithMany(e => e.Users);
+            builder.Entity<ApplicationUser>().HasOne(e => e.Customer).WithOne(e => e.ApplicationUser).HasForeignKey<Customer>(fk => fk.ApplicationUserId);
+            
 
             #endregion
 
@@ -67,29 +68,29 @@ namespace Infrastructure.DatabaseContext
                 .HasOne(e => e.BillingLocation)
                 .WithMany(e => e.BillingCustomers)
                 .HasForeignKey(e => e.BillingLocationItemId);
-               
+
             #endregion
 
             #region Order table relations
 
-            builder.Entity<Order>().HasOne(e => e.Coupon).WithMany(e => e.Orders).HasForeignKey(e=>e.CouponItemId).IsRequired(false);
-            builder.Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders).HasForeignKey(e=>e.CustomerItemId);
+            builder.Entity<Order>().HasOne(e => e.Coupon).WithMany(e => e.Orders).HasForeignKey(e => e.CouponItemId).IsRequired(false);
+            builder.Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders).HasForeignKey(e => e.CustomerItemId);
             builder.Entity<Order>().HasMany(e => e.Product).WithMany(e => e.CustomerOrders);
-            builder.Entity<Invoice>().HasOne(e => e.Order).WithOne(e => e.Invoice).HasForeignKey<Invoice>(fk=>fk.OrderItemId);
+            builder.Entity<Invoice>().HasOne(e => e.Order).WithOne(e => e.Invoice).HasForeignKey<Invoice>(fk => fk.OrderItemId);
 
             #endregion
 
             #region Shopping Cart Relations
 
             builder.Entity<ShoppingCart>().HasMany(e => e.Products).WithMany(e => e.ShoppingCarts);
-            builder.Entity<ShoppingCart>().HasOne(e => e.Customer).WithOne(e => e.ShoppingCart).HasForeignKey<ShoppingCart>(fk=>fk.CustomerItemId);
+            builder.Entity<ShoppingCart>().HasOne(e => e.Customer).WithOne(e => e.ShoppingCart).HasForeignKey<ShoppingCart>(fk => fk.CustomerItemId);
 
             #endregion
 
             #region Shipping Info Relations
 
-            builder.Entity<ShippingInfo>().HasMany(e => e.CustomerOrders).WithOne(e => e.ShippingInfo).HasForeignKey(e=>e.ShippingInfoId);
-            builder.Entity<ShippingInfo>().HasOne(e => e.BillingLocation).WithOne(e => e.ShippingInfo).HasForeignKey<ShippingInfo>(e=>e.BillingLocationItemId);
+            builder.Entity<ShippingInfo>().HasMany(e => e.CustomerOrders).WithOne(e => e.ShippingInfo).HasForeignKey(e => e.ShippingInfoId);
+            builder.Entity<ShippingInfo>().HasOne(e => e.BillingLocation).WithOne(e => e.ShippingInfo).HasForeignKey<ShippingInfo>(e => e.BillingLocationItemId);
 
 
             #endregion
@@ -132,15 +133,15 @@ namespace Infrastructure.DatabaseContext
 
         }
 
-        private static void ConfigureUser(EntityTypeBuilder<User> entity)
-        {
+        //private static void ConfigureUser(EntityTypeBuilder<User> entity)
+        //{
 
-            entity.HasIndex(u => new { u.FirstName, u.LastName, u.Email }).IsUnique(false);
+        //    entity.HasIndex(u => new { u.FirstName, u.LastName, u.Email }).IsUnique(false);
 
-            entity.HasIndex(u => u.CreatedOn);
+        //    entity.HasIndex(u => u.CreatedOn);
 
-            entity.HasIndex(u => u.Email).IsUnique();
-        }
+        //    entity.HasIndex(u => u.Email).IsUnique();
+   //     }
 
     }
 }

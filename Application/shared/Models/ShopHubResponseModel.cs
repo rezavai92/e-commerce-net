@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
+using System.Text.Json.Nodes;
 
 namespace Application.shared.Models
 {

@@ -27,7 +27,7 @@ namespace WebService.Controllers.ProductController
 
 
         [HttpGet("GetProducts")]
-        public async Task<ShopHubResponseModel> GetProducts([FromBody] GetProductsQuery query)
+        public async Task<ShopHubResponseModel> GetProducts([FromQuery] GetProductsQuery query)
         {
             return await _queryDispatcher.DispatchAsync<GetProductsQuery>(query);
         }
@@ -40,12 +40,7 @@ namespace WebService.Controllers.ProductController
             return result;
         }
 
-        [HttpGet("GetCategoryById")]
-        public async Task<ShopHubResponseModel> GetCategoryById([FromQuery] string id)
-        {
-            var result = await _productService.GetProductCategoryByIdAsync(id);
-            return result;
-        }
+       
 
         [HttpPost]
         public async Task<ShopHubResponseModel> Post([FromBody] CreateProductCommand command)
@@ -67,20 +62,6 @@ namespace WebService.Controllers.ProductController
         {
         }
 
-        [HttpPost("CreateProductCategory")]
-        public async Task<ShopHubResponseModel> CreateProductCategory([FromBody] CreateProductCategoryCommand command)
-        {
-            var result = await _commandDispatcher.SendLocalAsync<CreateProductCategoryCommand>(command);
 
-            return result;
-        }
-
-        [HttpPost("CreateProductBrand")]
-        public async Task<ShopHubResponseModel> CreateProductBrand([FromBody] CreateProductBrandCommand command)
-        {
-            var result = await _commandDispatcher.SendLocalAsync<CreateProductBrandCommand>(command);
-
-            return result;
-        }
     }
 }

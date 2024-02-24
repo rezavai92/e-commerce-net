@@ -17,6 +17,8 @@ namespace Application
 
             services.AddAutoMapper(assembly);
 
+     //       services.AddAutoMapper(assembly);
+
             services.AddValidatorsFromAssembly(assembly);
 
             //    services.AddSingleton(typeof(CreateUserCommandHandler));

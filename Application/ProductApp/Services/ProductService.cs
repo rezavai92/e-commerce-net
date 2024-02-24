@@ -6,6 +6,7 @@ using Application.shared.Models;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Models;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace Application.ProductApp.Services
@@ -14,14 +15,14 @@ namespace Application.ProductApp.Services
     {
         private IPlatformLogger<ProductService> _logger;
         private IProductRepository _productRepo;
-        
+
         private IProductCategoryRepository _productCategoryRepo;
         private IProductBrandRepository _productBrandRepo;
 
         public ProductService(
-            IPlatformLogger<ProductService> logger, 
-            IProductRepository productRepo, 
-            IProductCategoryRepository productCategoryRepo, 
+            IPlatformLogger<ProductService> logger,
+            IProductRepository productRepo,
+            IProductCategoryRepository productCategoryRepo,
             IProductBrandRepository productBrandRepo)
         {
             _logger = logger;
@@ -50,7 +51,7 @@ namespace Application.ProductApp.Services
                 };
                 var isCreated = await _productRepo.InsertProductAsync(product);
 
-                if (isCreated) return response.SetSuccess(HttpStatusCode.Created,"Product created successfully");
+                if (isCreated) return response.SetSuccess(HttpStatusCode.Created, "Product created successfully");
             }
             catch (Exception ex)
             {
@@ -142,19 +143,76 @@ namespace Application.ProductApp.Services
             {
                 BrandIds = query.BrandIds,
                 CategoryIds = query.CategoryIds,
-                IsAscendingSort = query.IsAscendingSort,
-                MaximumPrice = query.MaximumPrice,
-                MinimumPrice = query.MinimumPrice,
-                PageNo = query.PageNo,
-                PageSize = query.PageSize,
-                SearchKey = query.SearchKey,
-                SortBy = query.SortBy
+                IsAscendingSort = query.IsAscendingSort ?? true,
+                MaximumPrice = query.MaximumPrice ?? 100000,
+                MinimumPrice = query.MinimumPrice ?? 0,
+                PageNo = query.PageNo ?? 0,
+                PageSize = query.PageSize ?? 10,
+                SearchKey = query.SearchKey ?? "",
+                SortBy = query.SortBy ?? "CreatedOn"
             };
 
             var products = await _productRepo.GetProductsAsync(dto);
 
+
+            products = JsonConvert.DeserializeObject<List<Product>>(JsonConvert.SerializeObject(products));
             return response.SetSuccess(products);
-            
+
+        }
+        #endregion
+
+        #region Get Many Categories
+        public async Task<ShopHubResponseModel> GetProductCategoriesAsync(GetAllProductCategoryQuery query)
+        {
+            var response = new ShopHubResponseModel();
+            try
+            {
+                var res = await _productCategoryRepo.GetProductCategoriesAsync(x => x.IsMarkedToDelete == false);
+
+                return response.SetSuccess(res);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                response.SetError(HttpStatusCode.InternalServerError, "Something went wrong");
+            }
+
+            return response;
+
+        }
+        #endregion
+
+
+        #region Get Many Brands
+        public async Task<ShopHubResponseModel> GetProductBrandsAsync(GetAllProductBrandQuery query)
+        {
+            var response = new ShopHubResponseModel();
+            try
+            {
+                var res = await _productBrandRepo.GetProductBrandsAsync(x => x.IsMarkedToDelete == false);
+
+                return response.SetSuccess(res);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                response.SetError(HttpStatusCode.InternalServerError, "Something went wrong");
+            }
+
+            return response;
+
+        }
+        #endregion
+
+        #region Get Brand by id
+        public async Task<ShopHubResponseModel> GetProductBrandByIdAsync(string itemId)
+        {
+            var response = new ShopHubResponseModel();
+            var brand = await _productBrandRepo.GetProductBrandByIdAsync(itemId);
+        
+              return response.SetSuccess(brand);    
         }
 
         #endregion
