@@ -10,6 +10,7 @@ using Newtonsoft.Json.Serialization;
 using Domain.IdentityEntities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Core.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddInfrastructure()
-    .AddApplication();
+    .AddApplication()
+    .AddCoreServices();
 
 
 // DI for identity services
@@ -44,13 +46,7 @@ builder.Services
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ShophubContext, string>>()
     .AddRoleStore<RoleStore<ApplicationRole, ShophubContext, string>>();
     
-            
-
-
-
-
-
-
+ 
 //configure logger
 
 builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, LoggerConfiguration configuration) =>
@@ -69,7 +65,10 @@ JsonConvert.DefaultSettings = () => new JsonSerializerSettings
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
 
-app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+app.UseHsts();
+
+
+app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000").AllowCredentials());
 
 app.UseGlobalExceptionHandlerMiddleware();
 

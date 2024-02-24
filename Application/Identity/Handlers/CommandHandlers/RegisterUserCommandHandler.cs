@@ -1,6 +1,7 @@
 ﻿using Application.Identity.Commands;
 using Application.shared.Interfaces;
 using Application.shared.Models;
+using Core.Shared.Interfaces;
 using Domain.Enums;
 using Domain.IdentityEntities;
 using Microsoft.AspNetCore.Identity;
@@ -14,13 +15,16 @@ namespace Application.Identity.Handlers.CommandHandlers
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private RoleManager<ApplicationRole> _roleManager;
+        private IJwtService _jwtService;
+        private IPlatformLogger<RegisterUserCommandHandler> _logger;
 
-
-        public RegisterUserCommandHandler(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
+        public RegisterUserCommandHandler(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService, IPlatformLogger<RegisterUserCommandHandler> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _jwtService = jwtService;
+            _logger = logger;
         }
 
         public async Task<ShopHubResponseModel> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
@@ -38,7 +42,7 @@ namespace Application.Identity.Handlers.CommandHandlers
 
             };
 
-
+            var token = _jwtService.GenerateJwtToken(user);
             var result = await _userManager.CreateAsync(user, command.Password);
 
             if (result.Succeeded)
@@ -53,15 +57,23 @@ namespace Application.Identity.Handlers.CommandHandlers
                         
                     };
 
+                   
+
                     await _roleManager.CreateAsync(applicationRole);
                 }
                 await _userManager.AddToRoleAsync(user, nameof(UserRole.AppUser));
                 await _signInManager.SignInAsync(user, command.RememberMe);
-                response.SetSuccess(HttpStatusCode.Created, "User created successfully");
+
+                // Generate JWT and attach with the response 
+
+              
+
+                response.SetSuccess(token);
             }
             else
             {
-                response.SetError(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(result.Errors));
+                _logger.LogError(JsonConvert.SerializeObject(result.Errors));
+                response.SetError(HttpStatusCode.BadRequest, "Something went wrong");
 
             }
 

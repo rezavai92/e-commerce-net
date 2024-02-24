@@ -17,6 +17,8 @@ namespace Domain.IdentityEntities
         public Customer? Customer { get; set; }
         public string? CustomerId { get; set; }
 
+        public string ProfileImageUrl { get; set; }
+
 
 
 

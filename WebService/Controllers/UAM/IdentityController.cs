@@ -26,5 +26,13 @@ namespace WebService.Controllers.UAM
 
             return response;
         }
+
+        [HttpPost("login")]
+        public async Task<ShopHubResponseModel> Login([FromBody] LoginUserCommand command)
+        {
+            var response = await _commandDispatcher.SendLocalAsync(command);
+
+            return response;
+        }
     }
 }
