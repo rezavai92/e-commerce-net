@@ -4,6 +4,7 @@ using Application.shared.Models;
 using Core.Shared.Interfaces;
 using Domain.Enums;
 using Domain.IdentityEntities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using System.Net;
@@ -67,6 +68,7 @@ namespace Application.Identity.Handlers.CommandHandlers
                 // Generate JWT and attach with the response 
 
               
+             
 
                 response.SetSuccess(token);
             }
