@@ -1,4 +1,5 @@
 ﻿using Application.Identity.Commands;
+using Application.Identity.Dtos;
 using Application.shared.Interfaces;
 using Application.shared.Models;
 using Core.Shared.Interfaces;
@@ -67,10 +68,19 @@ namespace Application.Identity.Handlers.CommandHandlers
 
                 // Generate JWT and attach with the response 
 
-              
+                var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
+                var dto = new SignupResponseDto
+                {
+                    DisplayName = user.FirstName,
+                    Email = user.Email,
+                    ProfileImageUrl = user.ProfileImageUrl,
+                    Token = token,
+                    UserRoles = userRoles,
+                    
+                };
              
 
-                response.SetSuccess(token);
+                response.SetSuccess(dto);
             }
             else
             {
