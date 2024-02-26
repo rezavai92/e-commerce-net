@@ -44,12 +44,15 @@ namespace Application.Identity.Handlers.CommandHandlers
 
                     var jwtToken = _jwtService.GenerateJwtToken(foundUser);
 
+                    var roles = await _userManager.GetRolesAsync(foundUser);
+
                     var loginResponseDto = new LoginResponseDto
                     {
                         DisplayName = foundUser.FirstName + " " + foundUser.LastName,
                         Email = foundUser.Email,
                         ProfileImageUrl = foundUser.ProfileImageUrl,
-                        Token = jwtToken
+                        Token = jwtToken,
+                        UserRoles = roles.ToList()
                     };
 
                     return response.SetSuccess(loginResponseDto);

@@ -18,6 +18,8 @@ namespace Infrastructure
             services.AddTransient<IProductRepository, ProductRepository>() ;
             services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>() ;
             services.AddTransient<IProductBrandRepository, ProductBrandRepository>() ;
+            services.AddTransient<IFeatureRoleMapRepository,FeatureRoleMapRepository>() ;
+            services.AddTransient<IFeatureEndpointMapRepository,FeatureEndpointMapRepository>() ;
           
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
             

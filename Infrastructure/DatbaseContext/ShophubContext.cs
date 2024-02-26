@@ -24,6 +24,8 @@ namespace Infrastructure.DatabaseContext
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<FeatureRoleMap> FeatureRoleMaps { get; set; }
+        public DbSet<FeatureEndpointMap> FeatureEndpointMaps { get; set; }
         //public DbSet<Role> Roles { get; set; }
 
 
@@ -102,6 +104,10 @@ namespace Infrastructure.DatabaseContext
             #endregion
 
 
+            #region Feature Role/endpoint map
+            builder.Entity<FeatureRoleMap>().HasMany(e => e.FeatureEndpointMaps).WithMany(e => e.FeatureRoleMaps);
+            #endregion
+
             /// add seed data on initial creation (it won't have any effect after first migraiton
 
             //var products = GetSeedDataFromJson<List<Product>>("seeds/Product.json");
@@ -141,7 +147,7 @@ namespace Infrastructure.DatabaseContext
         //    entity.HasIndex(u => u.CreatedOn);
 
         //    entity.HasIndex(u => u.Email).IsUnique();
-   //     }
+        //     }
 
     }
 }
